@@ -3,7 +3,6 @@
 package edu.vuum.mocca;
 
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-import java.util.concurrent.locks.Lock;
 
 /**
  * @class SimpleAtomicLong
@@ -24,12 +23,18 @@ class SimpleAtomicLong
      * The ReentrantReadWriteLock used to serialize access to mValue.
      */
     // TODO - add the implementation
+    // DONE - Finished the above TODO
+    ReentrantReadWriteLock readWriteLock = new ReentrantReadWriteLock();
 
     /**
      * Creates a new SimpleAtomicLong with the given initial value.
      */
     public SimpleAtomicLong(long initialValue) {
         // TODO - you fill in here
+        // DONE - Finished the above TODO
+    	readWriteLock.writeLock().lock();
+    	mValue = initialValue;
+    	readWriteLock.writeLock().unlock();
     }
 
     /**
@@ -39,6 +44,12 @@ class SimpleAtomicLong
      */
     public long get() {
         // TODO - you fill in here
+        // DONE - Finished the above TODO
+    	readWriteLock.readLock().lock();
+    	long currentValue;
+    	currentValue = mValue;
+    	readWriteLock.readLock().unlock();
+    	return currentValue;
     }
 
     /**
@@ -48,6 +59,14 @@ class SimpleAtomicLong
      */
     public long decrementAndGet() {
         // TODO - you fill in here
+        // DONE - Finished the above TODO
+
+    	readWriteLock.writeLock().lock();
+    	long updatedValue;
+    	mValue--;
+    	updatedValue = mValue;
+    	readWriteLock.writeLock().unlock();
+    	return updatedValue;
     }
 
     /**
@@ -57,6 +76,14 @@ class SimpleAtomicLong
      */
     public long getAndIncrement() {
         // TODO - you fill in here
+        // DONE - Finished the above TODO
+    	
+    	readWriteLock.writeLock().lock();
+    	long previousValue;
+    	previousValue = mValue;
+    	mValue++;
+    	readWriteLock.writeLock().unlock();
+    	return previousValue;
     }
 
     /**
@@ -66,6 +93,15 @@ class SimpleAtomicLong
      */
     public long getAndDecrement() {
         // TODO - you fill in here
+        // DONE - Finished the above TODO
+
+    	readWriteLock.writeLock().lock();
+    	long previousValue;
+    	previousValue = mValue;
+    	mValue--;
+    	readWriteLock.writeLock().unlock();
+    	return previousValue;
+
     }
 
     /**
@@ -75,6 +111,13 @@ class SimpleAtomicLong
      */
     public long incrementAndGet() {
         // TODO - you fill in here
+    	readWriteLock.writeLock().lock();
+    	long updatedValue;
+    	mValue++;
+    	updatedValue = mValue;
+    	readWriteLock.writeLock().unlock();
+    	return updatedValue;
+
     }
 }
 
